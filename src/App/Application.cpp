@@ -356,6 +356,8 @@ Application::Application(std::map<std::string,std::string> &mConfig)
     Base::Vector2dPy::init_type();
     Base::Interpreter().addType(Base::Vector2dPy::type_object(),
         pBaseModule,"Vector2d");
+    
+    Py::PropertyPartMaterial::init_type();
 }
 
 Application::~Application()
@@ -1842,8 +1844,6 @@ void Application::initTypes(void)
     App ::LinkBaseExtensionPython       ::init();
     App ::LinkExtension                 ::init();
     App ::LinkExtensionPython           ::init();
-
-    Py::PropertyPartMaterial        ::init_type();
 
     // Material support
     App ::MaterialDatabase          ::init();
