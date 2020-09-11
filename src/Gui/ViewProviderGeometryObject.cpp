@@ -151,8 +151,9 @@ void ViewProviderGeometryObject::onChanged(const App::Property* prop)
         pcShapeMaterial->diffuseColor.setValue(c.r,c.g,c.b);
 
         if (ShapeMaterial.getValue() && c != ShapeMaterial.getValue()->getDiffuseColor()) {
-            cow(ShapeMaterial);
-            ShapeMaterial.setDiffuseColor(c);
+            if (cow(ShapeMaterial)) {
+                ShapeMaterial.setDiffuseColor(c);
+            }
         }
     }
     else if (prop == &Transparency) {
@@ -206,8 +207,9 @@ void ViewProviderGeometryObject::attach(App::DocumentObject *pcObj)
 
     ShapeMaterial.setValue(default_mat);
     if (default_mat->getDiffuseColor() != App::Color(r, g, b)) {
-        cow(ShapeMaterial);
-        ShapeMaterial.setDiffuseColor(App::Color(r, g, b));
+        if (cow(ShapeMaterial)) {
+            ShapeMaterial.setDiffuseColor(App::Color(r, g, b));
+        }
     }
 }
 
@@ -396,12 +398,19 @@ bool ViewProviderGeometryObject::cow(App::PropertyMaterial &prop)
 {
     const App::Material * mat = prop.getValue();
     if (mat->getSource()->isReadOnly()) {
-        App::MaterialSource * source = getObject()->getDocument()->getMaterialDatabase().getMaterialSource("Document");
-
-        App::Material * new_mat = source->getOrCreateMaterial((std::string(getObject()->getNameInDocument()) + "-line-material").c_str());
-        new_mat->setProperty("Father", mat->getName());
-        prop.setValue(new_mat);
-        return true;
+        App::DocumentObject * object = getObject();
+        if (object) {
+            App::Document * document = object -> getDocument();
+            App::MaterialSource * source = document -> getMaterialDatabase().getMaterialSource("Document");
+            //App::MaterialSource * source = getObject()->getDocument()->getMaterialDatabase().getMaterialSource("Document");
+            App::Material * new_mat = source->getOrCreateMaterial((std::string(getObject()->getNameInDocument()) + "-line-material").c_str());
+            new_mat->setProperty("Father", mat->getName());
+            prop.setValue(new_mat);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     else
         return false;
