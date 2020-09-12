@@ -227,7 +227,7 @@ def SetupStockObject(obj, stockType):
         obj.setEditorMode('StockType', 2) # hide
 
         PathIconViewProvider.ViewProvider(obj.ViewObject, 'Stock')
-        obj.ViewObject.Transparency = 90
+        # obj.ViewObject.Transparency = 90
         obj.ViewObject.DisplayMode = 'Wireframe'
 
 class FakeJob(object):
