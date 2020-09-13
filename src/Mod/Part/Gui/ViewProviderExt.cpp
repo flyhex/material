@@ -409,8 +409,9 @@ void ViewProviderPartExt::onChanged(const App::Property* prop)
 
         pcLineMaterial->diffuseColor.setValue(c.r,c.g,c.b);
         if (Mat && c != Mat->getDiffuseColor()) {
-            cow(LineMaterial);
-            LineMaterial.setDiffuseColor(c);
+            if (cow(LineMaterial)) {
+                LineMaterial.setDiffuseColor(c);
+            }
         }
         LineColorArray.setValue(LineColor.getValue());
     }
@@ -420,8 +421,9 @@ void ViewProviderPartExt::onChanged(const App::Property* prop)
 
         pcPointMaterial->diffuseColor.setValue(c.r,c.g,c.b);
         if (Mat && c != Mat->getDiffuseColor()) {
-            cow(PointMaterial);
-            PointMaterial.setDiffuseColor(c);
+            if (cow(PointMaterial)) {
+                PointMaterial.setDiffuseColor(c);
+            }
         }
         PointColorArray.setValue(PointColor.getValue());
     }
@@ -543,8 +545,9 @@ void ViewProviderPartExt::attach(App::DocumentObject *pcFeat)
     // Assign materials
     LineMaterial.setValue(default_mat);
     if (default_mat->getDiffuseColor() != App::Color(r, g, b)) {
-        cow(LineMaterial);
-        LineMaterial.setDiffuseColor(App::Color(r, g, b));
+        if (cow(LineMaterial)) {
+            LineMaterial.setDiffuseColor(App::Color(r, g, b));
+        }
     }
 
     lcol = hGrp->GetUnsigned("DefaultShapeVertexColor",421075455UL); // dark grey (25,25,25)
@@ -554,8 +557,9 @@ void ViewProviderPartExt::attach(App::DocumentObject *pcFeat)
     
     PointMaterial.setValue(default_mat);
     if (default_mat->getDiffuseColor() != App::Color(r, g, b)) {
-        cow(PointMaterial);
-        PointMaterial.setDiffuseColor(App::Color(r, g, b));
+        if (cow(PointMaterial)) {
+            PointMaterial.setDiffuseColor(App::Color(r, g, b));
+        }
     }
     
     // Workaround for #0000433, i.e. use SoSeparator instead of SoGroup
