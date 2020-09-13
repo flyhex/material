@@ -1387,11 +1387,11 @@ MaterialDatabase &Application::getMaterialDatabase()
 
         /* Add system materials */
 
-        std::string system_dir = getResourceDir() + "/Mod/Material/StandardMaterial";
+        std::string system_dir = getResourceDir() + "Mod/Material/StandardMaterial";
         _pMaterialDatbase->addMaterialSource(std::make_shared<FileMaterialSource>("System", system_dir.c_str()));
 
         /* Add user materials */
-        std::string user_dir = getUserAppDataDir() + "Materials";
+        std::string user_dir = getUserAppDataDir() + "Mod/Material";
         _pMaterialDatbase->addMaterialSource(std::make_shared<FileMaterialSource>("User", user_dir.c_str()));
 
     }
