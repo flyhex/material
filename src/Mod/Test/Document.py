@@ -1136,7 +1136,7 @@ class DocumentPlatformCases(unittest.TestCase):
     self.Doc.Test.ColourList = [(1.0,0.5,0.0),(0.0,0.5,1.0)]
 
     # saving and restoring
-    '''self.Doc.saveAs(self.DocName)
+    self.Doc.saveAs(self.DocName)
     FreeCAD.closeDocument("PlatformTests")
     self.Doc = FreeCAD.open(self.DocName)
 
@@ -1147,7 +1147,7 @@ class DocumentPlatformCases(unittest.TestCase):
     self.failUnless(abs(self.Doc.Test.ColourList[1][0] - 0.0) < 0.01)
     self.failUnless(abs(self.Doc.Test.ColourList[1][1] - 0.5) < 0.01)
     self.failUnless(abs(self.Doc.Test.ColourList[1][2] - 1.0) < 0.01)
-    self.failUnless(abs(self.Doc.Test.ColourList[1][3] - 0.0) < 0.01)'''
+    self.failUnless(abs(self.Doc.Test.ColourList[1][3] - 0.0) < 0.01)
 
   def testVectorList(self):
     self.Doc.Test.VectorList = [(-0.05, 2.5, 5.2),(-0.05, 2.5, 5.2)]
