@@ -155,3 +155,29 @@ void PropertyDocumentMaterialSource::Paste(const Property &from)
 {
     source->Paste(static_cast<const PropertyDocumentMaterialSource*>(&from)->source);
 }
+
+PyObject *PropertyDocumentMaterialSource::getPyObject()
+{
+    if (PythonObject.is(Py::_None())) {
+        // ref counter is set to 1
+        PythonObject = Py::Object(new Py::PropertyDocumentMaterialSource(this), true);
+    }
+    return Py::new_reference_to(PythonObject);
+}
+
+void PropertyDocumentMaterialSource::setPyObject(PyObject *)
+{
+    throw Base::RuntimeError("Assignment not supported.");
+}
+
+Py::PropertyDocumentMaterialSource::PropertyDocumentMaterialSource(App::PropertyDocumentMaterialSource *_owner)
+    : PythonExtension<Py::PropertyDocumentMaterialSource>()
+    , owner(_owner)
+{
+}
+
+void Py::PropertyDocumentMaterialSource::init_type()
+{
+    behaviors().name("PropertyDocumentMaterialSource");
+    behaviors().doc("PropertyDocumentMaterialSource, to support materials sources for documents");
+}

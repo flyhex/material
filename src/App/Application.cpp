@@ -358,6 +358,7 @@ Application::Application(std::map<std::string,std::string> &mConfig)
         pBaseModule,"Vector2d");
     
     Py::PropertyPartMaterial::init_type();
+    Py::PropertyDocumentMaterialSource::init_type();
 }
 
 Application::~Application()

@@ -26,6 +26,7 @@
 #include <memory>
 
 #include "Property.h"
+#include <CXX/Extensions.hxx>
 
 namespace App {
 
@@ -56,11 +57,31 @@ public:
 
     virtual void Restore(Base::XMLReader & reader);
 
+    virtual PyObject *getPyObject(void);
+    virtual void setPyObject(PyObject *);
+
 protected:
     void Save(Base::Writer &writer, const Material *mat) const;
 
 private:
     std::shared_ptr<DocumentMaterialSource> source;
+
+    Py::Object PythonObject;
+};
+
+}
+
+namespace Py {
+
+class PropertyDocumentMaterialSource : public PythonExtension<PropertyDocumentMaterialSource> {
+
+public:
+    PropertyDocumentMaterialSource(App::PropertyDocumentMaterialSource * _owner);
+
+    static void init_type();
+
+private:
+    App::PropertyDocumentMaterialSource * owner;
 };
 
 }
