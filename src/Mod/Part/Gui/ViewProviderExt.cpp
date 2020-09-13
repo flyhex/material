@@ -421,7 +421,7 @@ void ViewProviderPartExt::onChanged(const App::Property* prop)
 
         pcPointMaterial->diffuseColor.setValue(c.r,c.g,c.b);
         if (Mat && c != Mat->getDiffuseColor()) {
-            if (cow(LineMaterial)) {
+            if (cow(PointMaterial)) {
                 PointMaterial.setDiffuseColor(c);
             }
         }
@@ -557,7 +557,7 @@ void ViewProviderPartExt::attach(App::DocumentObject *pcFeat)
     
     PointMaterial.setValue(default_mat);
     if (default_mat->getDiffuseColor() != App::Color(r, g, b)) {
-        if (cow(LineMaterial)) {
+        if (cow(PointMaterial)) {
             PointMaterial.setDiffuseColor(App::Color(r, g, b));
         }
     }

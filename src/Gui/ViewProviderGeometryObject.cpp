@@ -401,12 +401,29 @@ bool ViewProviderGeometryObject::cow(App::PropertyMaterial &prop)
         App::DocumentObject * object = getObject();
         if (object) {
             App::Document * document = object -> getDocument();
-            App::MaterialSource * source = document -> getMaterialDatabase().getMaterialSource("Document");
-            //App::MaterialSource * source = getObject()->getDocument()->getMaterialDatabase().getMaterialSource("Document");
-            App::Material * new_mat = source->getOrCreateMaterial((std::string(getObject()->getNameInDocument()) + "-line-material").c_str());
-            new_mat->setProperty("Father", mat->getName());
-            prop.setValue(new_mat);
-            return true;
+            if (document) {
+                App::MaterialSource * source = document -> getMaterialDatabase().getMaterialSource("Document");
+                //App::MaterialSource * source = getObject()->getDocument()->getMaterialDatabase().getMaterialSource("Document");
+                if (source) {
+                    std::string objName = object -> getNameInDocument();
+                    std::string lineName = objName + "-line-material";
+                    App::Material * new_mat = source->getOrCreateMaterial(lineName.c_str());
+                    if (new_mat) {
+                        new_mat->setProperty("Father", mat->getName());
+                        prop.setValue(new_mat);
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                 }
+                 else {
+                    return false;
+                 }
+             }
+             else {
+                return false;
+             }
         }
         else {
             return false;
