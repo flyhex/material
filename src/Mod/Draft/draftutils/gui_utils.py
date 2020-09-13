@@ -384,7 +384,8 @@ def format_object(target, origin=None):
             matchrep = origin.ViewObject
             for p in matchrep.PropertiesList:
                 if p not in ("DisplayMode", "BoundingBox",
-                             "Proxy", "RootNode", "Visibility"):
+                             "Proxy", "RootNode", "Visibility",
+                             "LineMaterial", "PointMaterial", "ShapeMaterial"):
                     if p in obrep.PropertiesList:
                         if not obrep.getEditorMode(p):
                             if hasattr(getattr(matchrep, p), "Value"):
